@@ -1,0 +1,39 @@
+<div style="text-align:center">
+    <h1>{{ name }}</h1>
+    <ul>
+        <li *ngFor="let feature of characteristics">
+            {{ feature }}
+        </li>
+    </ul>
+    <table style="width: 100%">
+        <tr>
+            <th>Mileage</th>
+            <th>{{ mileage }}</th>
+        </tr>
+        <tr>
+            <th>Fuel in tank</th>
+            <th>{{ fuel }}</th>
+        </tr>
+        <tr>
+            <th>Tank Capacity</th>
+            <th>{{ tankCapacity }}</th>
+        </tr>
+    </table>
+</div>
+<div class="flex-container">
+    <div>
+        <p>Set how many liters you want to refuel</p>
+        <input type="number" #volume min="1" max="{{tankCapacity}}" placeholder="0" pattern="^[1-9]\d+">
+        <button (click)="refuel(+volume.value)" [disabled]="fuel == tankCapacity">Refuel</button>    
+        <label for="myProgress" class="for">Tank Status: {{ fuel }} liters</label>
+        <progress #myProgress value="{{fuel}}"  max="{{tankCapacity}}"></progress>
+    </div>
+    <div>
+        <p>Set how many kilometers you want to drive</p>
+        <input type="number" min="1" #distance placeholder="0">
+        <button (click)="drive(+distance.value)" [disabled]="!fuel">Drive</button>
+        <p *ngIf=!fuel>Your tank is empty, sorry!</p>
+        <button *ngIf=!fuel (click)="refuel(tankCapacity)">Refuel empty tank!</button>
+    </div>
+</div>
+
